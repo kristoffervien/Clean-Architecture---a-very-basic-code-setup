@@ -8,6 +8,7 @@ using CleanArch.Domain.Models;
 using CleanArch.Domain.Queries;
 using CleanArch.Domain.QueriesHandlers;
 using CleanArch.Infra.Bus;
+using CleanArch.Infra.Data.Common;
 using CleanArch.Infra.Data.Context;
 using CleanArch.Infra.Data.Repository;
 using MediatR;
@@ -35,6 +36,12 @@ namespace CleanArch.Infra.IoC
 
             //Infra.Data Layer
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<BaseRepository<Claimant>, ClaimantRepository>(x =>
+
+             new ClaimantRepository(dbContext: x.GetRequiredService<UniversityDBContext>())
+
+            );
+
             services.AddScoped<UniversityDBContext>();
         }
     }
